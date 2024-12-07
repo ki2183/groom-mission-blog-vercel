@@ -1,13 +1,16 @@
 import { Iblog } from "@/type/blog";
+import { ApiResponse } from "./response";
+import { Ipagenite } from "@/app/api/blogs/paginate/route";
 
-const BASE_URL = '/api/blogs';
+// const BASE_URL = '/api/blogs';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/api/blogs";
 
 //리턴 데이터
-interface ApiResponse<T> {
-    data: T;
-    message: string;
-    success: boolean;
-}  
+// interface ApiResponse<T> {
+//     data: T;
+//     message: string;
+//     success: boolean;
+// }  
 
 //에러 처리 함수
 async function handleResponse<T>(res: Response): Promise<T> {
@@ -59,12 +62,10 @@ export async function deleteBlog(id: string) {
   return handleResponse(res);
 }
 
+const PAGESIZE = 5;
+
 // 블로그 글 총 개수
-// export async function deleteBlog(id: string) {
-//   const res = await fetch(`${BASE_URL}/${id}`, {
-//     method: 'GET',
-//     headers: { 'Content-Type': 'application/json' },
-//   });
-  
-//   return handleResponse(res);
-// }
+export async function paginateBlog(page:number): Promise<ApiResponse<Ipagenite>> {
+  const res = await fetch(`${BASE_URL}/paginate?page=${page}&pageSize=${PAGESIZE}`);
+  return handleResponse(res);
+}

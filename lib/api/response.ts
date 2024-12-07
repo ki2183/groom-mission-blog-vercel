@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { Pool } from "pg";
 
+//리턴 데이터
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+  success: boolean;
+}  
+
+
 interface IcreateErrorResponse {
     msg: string,
     status?: number,

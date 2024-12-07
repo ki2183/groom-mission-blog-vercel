@@ -1,6 +1,9 @@
+"use client"
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import React, { use, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { getBlog } from '@/lib/api/blog';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 /*
     Toast를 사용하면 어쩌피 client side rendering을 써야함
@@ -15,8 +18,12 @@ function WriteEditor( props: WriteEditorProps ) {
     const { handleFoem } = props
 
     const editorRef = useRef<Editor>(null);
+    const [init, setInit] = useState<string>("");
     const titleRef = useRef<HTMLInputElement|null>(null);
     const [previewStyle, setPreviewStyle] = useState<"vertical" | "tab">("vertical");
+    
+    const pathname = usePathname(); 
+    const id = pathname.split("/")[2];
     
     //title 과 contents 기반 글생성
     const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -56,6 +63,19 @@ function WriteEditor( props: WriteEditorProps ) {
         return () => window.removeEventListener('resize', handleWindowResize);
     },[previewStyle])
 
+    useEffect(() => {
+      if (!id) return;
+
+      (async()=>{
+        const {title, contents} = (await getBlog(id)).data;
+        
+        if (!titleRef.current || !editorRef.current) return;
+
+        titleRef.current.value = title;
+        editorRef.current.getInstance().setMarkdown(contents);  
+      })()
+      
+    },[])
   
     return (
         <form className="w-auto h-auto py-12 flex flex-col gap-4" onSubmit={onSubmitHandler}>
@@ -85,6 +105,7 @@ function WriteEditor( props: WriteEditorProps ) {
             height="80vh"
             initialEditType="markdown"
             useCommandShortcut={true}
+            
           />
         </div>
       
