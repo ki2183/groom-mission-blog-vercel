@@ -32,5 +32,13 @@ export const createErrorResponse = ({msg, status = 200, errConsole}:IcreateError
   };
   
 
+  export async function handleResponse<T>(res: Response): Promise<T> {
+    if (!res.ok) {
+      throw new Error(`Failed to fetch: ${res.statusText}`);
+    }
+    return res.json();
+  }
+  
+
 //db서버 연결 키
 export const pool = new Pool({ connectionString: process.env.POSTGRES_URL_URL });

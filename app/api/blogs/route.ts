@@ -15,8 +15,8 @@ import { createErrorResponse, pool } from '@/lib/api/response';
 
     - DELETE : 특정 블로그 데이터 삭제
 
-  3. /api/blogs/pages
-    - GET: 블로그 글 전체 개수
+  3. /api/blogs/pagenate?page=${페이지}&pageSize=${페이지 안에 표시할 데이터 개수}
+    - GET: 페이지 네이션
 
 */
 

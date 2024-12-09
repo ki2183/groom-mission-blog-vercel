@@ -1,7 +1,8 @@
-
+import DeleteButton from '@/components/deleteButton';
 import BlogViewer from '@/components/viewer';
 import { getBlog } from '@/lib/api/blog';
 import Link from 'next/link';
+
 import React from 'react'
 
 async function Page({ params }: { params: { id: string } }) {
@@ -16,7 +17,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   if (!success) return (<></>);
 
-  console.log(data)
+  // console.log(data)
   // const {
     // data,
     // success,
@@ -24,6 +25,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   //에러 처리 나중에 구현
   // if (!success) return <></>
+  
 
   return (
     <div>
@@ -31,6 +33,8 @@ async function Page({ params }: { params: { id: string } }) {
         <Link href={`/write/${data.id}`} >
           <button>update</button>
         </Link>
+        
+        <DeleteButton id={id}/>
     </div>
   )
 }

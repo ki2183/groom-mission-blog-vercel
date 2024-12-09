@@ -5,7 +5,7 @@ import { createErrorResponse, pool } from "@/lib/api/response";
 /* READ (식별 아이디) */
 export async function GET( req: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse> {
     try {
-      const { id } = params;
+      const { id } = await params;
   
       // ID가 없으면 오류 반환
       if (!id) return createErrorResponse({ msg:"ID is required", status:400 });
@@ -38,7 +38,7 @@ export async function GET( req: NextRequest, { params }: { params: { id: string 
 /* UPDATE (식별 아이디, 제목, 내용) */
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }):Promise<NextResponse> {
     try {
-        const { id } = params;
+        const { id } = await params;
         const {title, contents} = await req.json();
 
         // 데이터가 없음 오류 반환
@@ -48,7 +48,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         const client = await pool.connect();
         const result = await client.query(`
             UPDATE blogs 
-            SET title = $2, contents = $3, date = NOW()
+            SET title = $2, contents = $3
             WHERE id = $1
             RETURNING * 
             `, [id, title ,contents]
@@ -77,7 +77,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 /* DELETE (식별 아이디) */
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }):Promise<NextResponse> {
     try {
-        const { id } = params;
+        const { id } = await params;
 
         // 아이디가 없다면 오류 반환
         if(!id) return createErrorResponse({msg: "id is null"});

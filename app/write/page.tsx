@@ -5,16 +5,7 @@ import { createBlog } from '@/lib/api/blog';
 import React from 'react'
 
 function Page() {
-
-  const handleFoem = async (title:string, contents:string) => {
-    try {
-      const res = await createBlog(title, contents);
-      alert("Success full");
-    } catch (err) {
-      console.error(err);
-      alert("Fail");
-    }
-  }
+  const handleFoem = async (title:string, contents:string) => createBlog(title, contents)
 
   return (
     <main className='container-basic-setting w-screen h-screen'>

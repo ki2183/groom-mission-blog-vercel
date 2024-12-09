@@ -1,22 +1,14 @@
 "use client"
 
-import WriteEditor from '@/components/writeEditor'
-import { createBlog } from '@/lib/api/blog';
+import WriteEditor from '@/components/writeEditor';
+import { updateBlog } from '@/lib/api/blog';
+import { usePathname } from 'next/navigation';
 
 function Page() {
+  const pathname = usePathname(); 
+  const id = pathname.split("/")[2];
 
-  const handleFoem = async (title:string, contents:string) => {
-    try {
-      const res = await createBlog(title, contents);
-      alert("Success full");
-    } catch (err) {
-      console.error(err);
-      alert("Fail");
-    }
-  }
-
-  
-
+  const handleFoem = async (title:string, contents:string) => updateBlog(id ,title, contents);
   return (
     <main className='container-basic-setting w-screen h-screen'>
         <WriteEditor handleFoem={handleFoem} />
