@@ -5,8 +5,11 @@ import Link from 'next/link';
 
 import React from 'react'
 
-async function Page({ params }: { params: { id: string } }) {
-  const { id } = await params;
+
+
+export default async function Page(props: { params: Promise<{ id: string }>}) {
+  const id = (await props.params).id; 
+  console.log(id);
 
   console.log(id, "테스트");
 
@@ -38,5 +41,3 @@ async function Page({ params }: { params: { id: string } }) {
     </div>
   )
 }
-
-export default Page 

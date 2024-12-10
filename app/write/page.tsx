@@ -4,6 +4,8 @@ import WriteEditor from '@/components/writeEditor'
 import { createBlog } from '@/lib/api/blog';
 import React from 'react'
 
+export const dynamic = "force-dynamic";
+
 function Page() {
   const handleFoem = async (title:string, contents:string) => createBlog(title, contents)
 

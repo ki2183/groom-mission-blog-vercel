@@ -1,39 +1,49 @@
-
 import SavePageNumber from "@/components/savePrevPage";
 import { paginateBlog } from "@/lib/api/blog";
 import Link from "next/link";
 
 export default async function Page() {
-
   const page = 1;
-  const { data, success } = await paginateBlog(page); 
 
-  //에러 처리 추후에 판단
+  const { data, success } = await paginateBlog(page);
+
   if (!success) return <div>Error loading blogs. Please try again later.</div>;
-  
-  const {
-     result, hasNextPage,
-  } = data;
-  
+
+  const { result, hasNextPage, currentPage, hasPrevPage } = data;
+
   return (
-    <div>
-        <h1>Blogs - Page {1}</h1>
-        <ul>
-          {result.map(({ id, title }) => (
-            <Link key={id} href={`/view/${id}`}>
-                <li>{title}</li>
-            </Link>
-          ))}
-        </ul>
+    <div className="w-[100vw] h-[100vh] flex flex-col items-center pt-16 gap-2">
+      <h1 className="text-2xl">Blogs - Page {currentPage}</h1>
+      <ul>
+        {result.map(({ id, title }) => (
+          <Link key={id} href={`/view/${id}`}>
+            <li>{title}</li>
+          </Link>
+        ))}
+      </ul>
 
-        <div>
+      <div className="flex flex-row gap-1 items-end">
+        {hasPrevPage ? (
+          <Link className="text-[0.9rem]" href={`/${currentPage - 1}`}>
+            Prev
+          </Link>
+        ) : (
+          <span className="text-gray-500 text-[0.9rem]">Prev</span>
+        )}
 
-          {hasNextPage && (
-            <Link href={`/${2}`}>Next</Link>
-          )}
-        </div>
-        {/* csr 현재 페이지 저장용 */}
-        <SavePageNumber page={"1"}/>
+        <span className="text-[1.1rem]">{currentPage}</span>
+
+        {hasNextPage ? (
+          <Link className="text-[0.9rem]" href={`/${currentPage + 1}`}>
+            Next
+          </Link>
+        ) : (
+          <span className="text-gray-500 text-[0.9rem]">Next</span>
+        )}
       </div>
+
+      {/* csr 현재 페이지 저장용 */}
+      <SavePageNumber page={"1"} />
+    </div>
   );
 }

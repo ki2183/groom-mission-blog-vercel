@@ -14,6 +14,7 @@ export interface Ipagenite {
 export async function GET(req: NextRequest): Promise<NextResponse> {
 
   const url = req.nextUrl;
+  console.log(url);
   const page = parseInt(url.searchParams.get("page") || "1", 10); 
   const pageSize = parseInt(url.searchParams.get("pageSize") || "10", 10); 
 

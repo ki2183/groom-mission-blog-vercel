@@ -4,6 +4,8 @@ import WriteEditor from '@/components/writeEditor';
 import { updateBlog } from '@/lib/api/blog';
 import { usePathname } from 'next/navigation';
 
+export const dynamic = "force-dynamic";
+
 function Page() {
   const pathname = usePathname(); 
   const id = pathname.split("/")[2];

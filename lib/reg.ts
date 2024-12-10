@@ -1,1 +1,0 @@
-const titleReg = new RegExp(" ")

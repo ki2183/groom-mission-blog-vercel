@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 
 // 모달 상태 및 로딩 상태 관리 훅
 export const useLoadingState = () => {

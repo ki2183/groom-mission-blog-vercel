@@ -3,8 +3,9 @@ import { ApiResponse } from "./response";
 import { Ipagenite } from "@/app/api/blogs/paginate/route";
 
 // const BASE_URL = '/api/blogs';
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/api/blogs";
-
+const URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const BASE_URL = URL + "/api/blogs"
+// /api/blogs
 //에러 처리 함수
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

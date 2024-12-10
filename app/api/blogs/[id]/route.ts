@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createErrorResponse, pool } from "@/lib/api/response"; 
 
-
 /* READ (식별 아이디) */
-export async function GET( req: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse> {
+export async function GET(
+    req: NextRequest
+  ) {
     try {
-      const { id } = await params;
+        const id = req.url.split('/').at(-1)
   
       // ID가 없으면 오류 반환
       if (!id) return createErrorResponse({ msg:"ID is required", status:400 });
@@ -36,10 +37,11 @@ export async function GET( req: NextRequest, { params }: { params: { id: string 
 
 
 /* UPDATE (식별 아이디, 제목, 내용) */
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }):Promise<NextResponse> {
+export async function PUT(req: NextRequest):Promise<NextResponse> {
     try {
-        const { id } = await params;
+        // const { id } = params;
         const {title, contents} = await req.json();
+        const id = req.url.split('/').at(-1);
 
         // 데이터가 없음 오류 반환
         if(!id || !contents || !title) return createErrorResponse({ msg: "id or contents or title is null" });
@@ -75,9 +77,10 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 
 
 /* DELETE (식별 아이디) */
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }):Promise<NextResponse> {
+export async function DELETE(req: NextRequest):Promise<NextResponse> {
     try {
-        const { id } = await params;
+        
+        const id = req.url.split('/').at(-1);
 
         // 아이디가 없다면 오류 반환
         if(!id) return createErrorResponse({msg: "id is null"});
