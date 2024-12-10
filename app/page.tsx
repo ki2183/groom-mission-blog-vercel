@@ -11,6 +11,9 @@ export default async function Page() {
 
   const { result, hasNextPage, currentPage, hasPrevPage } = data;
 
+  console.log('POSTGRES_URL_USER:', process.env.POSTGRES_URL_USER);
+console.log('POSTGRES_URL_URL:', process.env.POSTGRES_URL_URL);
+
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col items-center pt-16 gap-2">
       <h1 className="text-2xl">Blogs - Page {currentPage}</h1>
